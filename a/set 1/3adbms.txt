@@ -1,0 +1,49 @@
+3)Create a database with suitable example using MongoDB and implement Execute at least 10 queries on any suitable MongoDB database that demonstrates following: Find and find One (specific values).
+ 
+Step 1: Create database and insert many documents
+use companyDB
+
+db.employees.insertMany([
+  { name: "Amit", age: 25, department: "HR", salary: 50000 },
+  { name: "Riya", age: 30, department: "Finance", salary: 70000 },
+  { name: "Sunil", age: 28, department: "HR", salary: 55000 },
+  { name: "Priya", age: 35, department: "Finance", salary: 80000 },
+  { name: "Rohit", age: 24, department: "Sales", salary: 45000 },
+  { name: "Sneha", age: 29, department: "IT", salary: 75000 },
+  { name: "Vijay", age: 40, department: "IT", salary: 85000 },
+  { name: "Sapna", age: 32, department: "Sales", salary: 60000 },
+  { name: "Nitin", age: 27, department: "HR", salary: 52000 },
+  { name: "Seema", age: 26, department: "Finance", salary: 72000 }
+])
+
+ 
+Step 2: Example Queries - Find and FindOne
+1.Find all employees:
+db.employees.find()
+
+2.Find employees in the "Finance" department:
+db.employees.find({ department: "Finance" })
+
+3.Find employees with salary greater than 60000:
+db.employees.find({ salary: { $gt: 60000 } })
+
+4.Find employees younger than 30 years:
+db.employees.find({ age: { $lt: 30 } })
+
+5.Find one employee named "Rohit":
+db.employees.findOne({ name: "Rohit" })
+
+6.Find employees in "HR" or "Sales" department:
+db.employees.find({ department: { $in: ["HR", "Sales"] } })
+
+7.Find employees with salary between 50000 and 75000:
+db.employees.find({ salary: { $gte: 50000, $lte: 75000 } })
+
+8.Find employees whose name starts with "S":
+db.employees.find({ name: /^S/ })
+
+9.Find one employee with the highest salary:
+db.employees.find().sort({ salary: -1 }).limit(1)
+
+10.Find all employees sorted by age in ascending order:
+db.employees.find().sort({ age: 1 })

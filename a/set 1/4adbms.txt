@@ -1,0 +1,44 @@
+4)Create a database with suitable example using MongoDB(insertMany) and implement Query criteria (Query conditionals, OR queries, $not, Conditional semantics).
+ 
+Step 1: Create database and insert many documents
+use schoolDB
+
+db.students.insertMany([
+  { name: "Amit", age: 15, grade: 9, city: "Mumbai" },
+  { name: "Riya", age: 16, grade: 10, city: "Pune" },
+  { name: "Sunil", age: 15, grade: 9, city: "Nagpur" },
+  { name: "Priya", age: 17, grade: 11, city: "Mumbai" },
+  { name: "Rohit", age: 14, grade: 8, city: "Pune" }
+])
+
+ 
+Step 2: MongoDB Query Criteria Examples
+1.Find students aged 15:
+db.students.find({ age: 15 })
+
+2.Find students in either grade 9 or 10 (OR query):
+db.students.find({ $or: [ { grade: 9 }, { grade: 10 } ] })
+
+3.Find students NOT from Pune (using $not):
+db.students.find({ city: { $not: { $eq: "Pune" } } })
+
+4.Find students whose age is greater than 15 (conditional):
+db.students.find({ age: { $gt: 15 } })
+
+5.Find students whose age is between 15 and 17 (conditional semantics):
+db.students.find({ age: { $gte: 15, $lte: 17 } })
+
+6.Find students whose name is NOT "Priya":
+db.students.find({ name: { $ne: "Priya" } })
+
+7.Find students living in Mumbai or Pune:
+db.students.find({ city: { $in: ["Mumbai", "Pune"] } })
+
+8.Find students whose age is NOT less than 15 (i.e. age >= 15):
+db.students.find({ age: { $not: { $lt: 15 } } })
+
+9.Find students with grades other than 9 or 10:
+db.students.find({ grade: { $nin: [9, 10] } })
+
+10.Find students who are in grade 9 and live in Mumbai (AND semantics by default):
+db.students.find({ grade: 9, city: "Mumbai" })

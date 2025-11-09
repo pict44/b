@@ -1,0 +1,38 @@
+5)Create a database(student) with suitable example using MongoDB(insertMany) and implement Type-specific queries (Null, Regular expression, Querying arrays) $ where queries.  
+Step 1: Create Database and Insert Documents
+use studentDB
+
+db.students.insertMany([
+  { name: "Amit", age: 20, hobbies: ["reading", "swimming"], address: null },
+  { name: "Riya", age: 22, hobbies: ["painting", "gaming"], address: "Mumbai" },
+  { name: "Sunil", age: null, hobbies: ["swimming", "cycling"], address: "Pune" },
+  { name: "Priya", age: 19, hobbies: [], address: "Nagpur" },
+  { name: "Rohit", age: 21, hobbies: ["gaming", "reading"], address: null }
+])
+
+ 
+Step 2: Type-specific Queries
+1.Find documents where age is null:
+db.students.find({ age: null })
+
+2.Find documents where address is null:
+db.students.find({ address: null })
+
+3.Find documents where name starts with "S" (using regular expressions):
+db.students.find({ name: /^S/ })
+
+4.Find documents with hobbies containing "gaming" (querying arrays):
+db.students.find({ hobbies: "gaming" })
+
+5.Find documents where hobbies array is empty:
+db.students.find({ hobbies: { $size: 0 } })
+
+6.Find documents where age is NOT null:
+db.students.find({ age: { $ne: null } })
+
+7.Using $where to find documents where age is greater than 20:
+db.students.find({ $where: "this.age > 20" })
+
+8.Using $where to find documents where hobbies include more than 1 item:
+db.students.find({ $where: "this.hobbies.length > 1" })
+

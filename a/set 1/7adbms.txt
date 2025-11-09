@@ -1,0 +1,48 @@
+7)Implement Map-reduce and aggregation, indexing with suitable example in MongoDB(insertMany and take easy db). Demonstrate the following: Aggregation framework.
+ 
+Step 1: Insert sample data using insertMany
+use employeeDB
+
+db.employees.insertMany([
+  { name: "Amit", department: "HR", salary: 50000 },
+  { name: "Riya", department: "Finance", salary: 70000 },
+  { name: "Sunil", department: "HR", salary: 55000 },
+  { name: "Priya", department: "Finance", salary: 80000 },
+  { name: "Rohit", department: "Sales", salary: 45000 }
+])
+
+ 
+Step 2: Example Map-Reduce - Total salary by department
+var mapFunction = function() {
+  emit(this.department, this.salary);
+};
+
+var reduceFunction = function(department, salaries) {
+  return Array.sum(salaries);
+};
+
+db.employees.mapReduce(
+  mapFunction,
+  reduceFunction,
+  { out: "salary_totals_by_department" }
+)
+
+db.salary_totals_by_department.find()
+This maps salaries by departments and reduces by summing them up.
+ 
+Step 3: Aggregation Framework - Total salary by department
+db.employees.aggregate([
+  {
+    $group: {
+      _id: "$department",
+      totalSalary: { $sum: "$salary" }
+    }
+  }
+])
+
+This groups documents by department and sums salary with aggregation.
+ 
+Step 4: Create an index on the name field
+db.employees.createIndex({ name: 1 })
+
+This index speeds up searches by employee name.

@@ -1,0 +1,51 @@
+1.Create a database with suitable example using MongoDB and implement Inserting and saving document (batch insert, insert validation).
+To create a database in MongoDB with document insertion (including batch insert and insert validation) as a beginner, follow these easy steps with examples.
+
+Step 1: Create a Database and Collection
+use studentDB
+This switches to (or creates) a database called studentDB.[1][2]
+
+Step 2: Insert a Single Document
+Now, insert a document into a collection called students.
+db.students.insertOne({
+  name: "Ankit",
+  age: 20,
+  branch: "IT"
+})
+This command creates the students collection and inserts one student record.[3][4]
+
+Step 3: Batch Insert Multiple Documents
+To insert multiple student documents at once, use insertMany():
+db.students.insertMany([
+  { name: "Riya", age: 21, branch: "CSE" },
+  { name: "Amit", age: 22, branch: "ECE" },
+  { name: "Priya", age: 20, branch: "IT" }
+])
+This saves an array of student documents in a single command.[5][6]
+ 
+Step 4: Insert Validation with Schema
+To validate your documents (for example, every student must have a name and age), create the collection with a schema validator:
+db.createCollection("validated_students", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "age"],
+      properties: {
+        name: { bsonType: "string", description: "must be a string" },
+        age: { bsonType: "int", minimum: 18, maximum: 30, description: "must be a number between 18 and 30" }
+      }
+    }
+  }
+})
+
+Try inserting a valid and invalid document:
+// This should work
+db.validated_students.insertOne({ name: "Sneha", age: 22 })
+
+// This will fail (missing age)
+db.validated_students.insertOne({ name: "Rohit" })
+
+The first command inserts successfully, while the second will cause a validation error because age is missing.[7]
+ 
+
+ 

@@ -1,0 +1,60 @@
+2.Create a database with suitable example using MongoDB and implement Removing document. Updating document (document replacement, using modifiers, up inserts, updating multiple documents, returning updated documents).
+
+Step 1: Create Database and Insert Documents (insertMany)
+Switch to your database and use insertMany() to add several students at once:
+use studentDB
+
+db.students.insertMany([
+  { name: "Amit", age: 20, branch: "CSE" },
+  { name: "Sneha", age: 21, branch: "ECE" },
+  { name: "Riya", age: 22, branch: "IT" }
+])
+This command creates the database and collection, and insert all three documents at once.
+ 
+Step 2: Remove Documents
+To remove students from the collection:
+•Remove one student:
+db.students.deleteOne({ name: "Amit" })
+
+•Remove all students in the IT branch:
+db.students.deleteMany({ branch: "IT" })
+This removes either one document or multiple documents that match the query.
+ 
+Step 3: Update Documents
+a) Document Replacement
+Replace Sneha’s record fully:
+db.students.replaceOne({ name: "Sneha" }, { name: "Sneha", age: 22, branch: "Civil" })
+This replaces the entire document that matches name: "Sneha" with the new document.
+
+b) Using Modifiers ($set)
+Update Riya’s age only, keeping other fields unchanged:
+db.students.updateOne(
+  { name: "Riya" },
+  { $set: { age: 23 } }
+)
+The $set modifier just changes age for Riya.
+
+c) Upsert (Update or Insert if not exists)
+If you want to update a record, and if no record matches, insert a new one:
+db.students.updateOne(
+  { name: "Ankit" },
+  { $set: { age: 24, branch: "CS" } },
+  { upsert: true }
+)
+If "Ankit" doesn’t exist, this creates it.
+
+d) Updating Multiple Documents
+Increase age by 1 for all students in the ECE branch:
+db.students.updateMany(
+  { branch: "ECE" },
+  { $inc: { age: 1 } }
+)
+This uses $inc modifier on multiple matching documents.
+
+e) Returning Updated Documents
+There isn’t a direct way to see the updated documents in the same command, but you can run a find afterwards:
+db.students.find({ branch: "ECE" })
+This shows the documents after update.
+ 
+These operations let you easily add, remove, and update multiple records for a simple student database in MongoDB.
+

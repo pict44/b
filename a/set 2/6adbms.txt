@@ -1,0 +1,38 @@
+6)Create a database(student or employee choose eay one) with suitable example using MongoDB (insertMany)and implement. Cursors (Limit, skip, sort, advanced query options).
+ 
+Step 1: Create Database and Insert Documents
+use employeeDB
+
+db.employees.insertMany([
+  { name: "Amit", age: 25, department: "HR" },
+  { name: "Riya", age: 30, department: "Finance" },
+  { name: "Sunil", age: 28, department: "HR" },
+  { name: "Priya", age: 35, department: "Finance" },
+  { name: "Rohit", age: 24, department: "Sales" },
+  { name: "Sneha", age: 29, department: "IT" },
+  { name: "Vijay", age: 40, department: "IT" },
+  { name: "Sapna", age: 32, department: "Sales" },
+  { name: "Nitin", age: 27, department: "HR" },
+  { name: "Seema", age: 26, department: "Finance" }
+])
+
+ 
+Step 2: Use Cursors and Advanced Query Options
+1.Get first 3 employees (Limit):
+db.employees.find().limit(3)
+
+2.Skip first 2 employees and get next 3 (Skip and Limit):
+db.employees.find().skip(2).limit(3)
+
+3.Sort employees by age in ascending order:
+db.employees.find().sort({ age: 1 })
+
+4.Sort employees by name descending:
+db.employees.find().sort({ name: -1 })
+
+5.Get employees in "HR" sorted by age, limit 2:
+db.employees.find({ department: "HR" }).sort({ age: 1 }).limit(2)
+
+6.Skip 1, limit 4, sort by age descending:
+db.employees.find().sort({ age: -1 }).skip(1).limit(4)
+

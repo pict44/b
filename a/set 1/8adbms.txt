@@ -1,0 +1,46 @@
+8)Create and drop different types of indexes and explain () to show the advantage of the indexes. (easy db and use insertMany)
+
+ 
+Step 1: Insert sample data with insertMany
+use libraryDB
+
+db.books.insertMany([
+  { title: "MongoDB Basics", author: "Alice", year: 2020 },
+  { title: "Java Programming", author: "Bob", year: 2018 },
+  { title: "Web Development", author: "Alice", year: 2021 },
+  { title: "Data Structures", author: "Charlie", year: 2019 },
+  { title: "Microservices", author: "Bob", year: 2022 }
+])
+
+ 
+Step 2: Create different types of indexes
+1.Create a single field index on author:
+db.books.createIndex({ author: 1 })
+
+Advantage: Speeds up queries filtering by author (ascending order).
+ 
+2.Create a compound index on author and year:
+db.books.createIndex({ author: 1, year: -1 })
+
+Advantage: Efficient for queries filtering by author and sorting/restricting by year (descending).
+ 
+3.Create a unique index on title:
+db.books.createIndex({ title: 1 }, { unique: true })
+
+Advantage: Ensures no duplicate book titles in the collection.
+ 
+4.Create a text index on title and author to support text search:
+db.books.createIndex({ title: "text", author: "text" })
+
+Advantage: Allows fast full-text search on title and author fields.
+ 
+Step 3: Drop indexes
+•Drop single index by key pattern:
+db.books.dropIndex({ author: 1 })
+
+•Drop compound index:
+db.books.dropIndex({ author: 1, year: -1 })
+
+•Drop all indexes except _id (default index):
+db.books.dropIndexes()
+
